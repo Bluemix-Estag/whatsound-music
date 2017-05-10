@@ -37,8 +37,8 @@ app.get('/v1/spotify/track', function (req, res) {
                     res.send(result);
                 } else {
                     var result = {
-                        "nome": JSON.stringify(info['tracks']['items'][0]['name']).replace(new RegExp('\\"', "g"), ""),
-                        "artista": JSON.stringify(info['tracks']['items'][0]['artists'][0]['name']).replace(new RegExp('\\"', "g"), ""),
+                        "name": JSON.stringify(info['tracks']['items'][0]['name']).replace(new RegExp('\\"', "g"), ""),
+                        "artist": JSON.stringify(info['tracks']['items'][0]['artists'][0]['name']).replace(new RegExp('\\"', "g"), ""),
                         "album": JSON.stringify(info['tracks']['items'][0]['album']['name']).replace(new RegExp('\\"', "g"), ""),
                         "uri": JSON.stringify(info['tracks']['items'][0]['uri']).replace(new RegExp('\\"', "g"), ""),
                         "url": JSON.stringify(info['tracks']['items'][0]['external_urls']['spotify']).replace(new RegExp('\\"', "g"), "")
