@@ -224,7 +224,7 @@ app.get('/whatsound/api/v1/spotify/album/values', function (req, res) {
                             "musicas": []
                         }
                         var opt = {
-                            url: "https://api.spotify.com/v1/albums/6hPkbAV3ZXpGZBGUvL6jVM/tracks",
+                            url: "https://api.spotify.com/v1/albums/"+result.id+"/tracks",
                             headers: {
                                 Accept: 'text/json'
                             }
