@@ -15,8 +15,16 @@ app.use(bodyParser.json())
 
 // nome, artista , album , uri
 app.get('/v1/spotify/track', function (req, res) {
-    var query = req.query.query;
+    var query = (req.query.query != null && req.query.query != '' && req.query.query != "undefined")? req.query.query : null;
     // tipo = tracks, artists, albums
+    console.log(query);
+    if(query == null){
+        var result = {
+            status: false,
+            message: "Bad request, {Empty query}"
+        }
+        res.status(400).json(result);
+    }else{
     var options = {
         url: "https://api.spotify.com/v1/search?q=" + query + "&type=track",
         headers: {
@@ -31,7 +39,7 @@ app.get('/v1/spotify/track', function (req, res) {
                 if (info['tracks']['items'].length == 0) {
                     var result = {
                         "code": 20,
-                        "message": "Música não encontrada",
+                        "message": "Músic not found",
                         "status": false
                     }
                     res.send(result);
@@ -45,12 +53,13 @@ app.get('/v1/spotify/track', function (req, res) {
                     }
                     res.send(result);
                 }
-            } else {
-                res.send(error);
             }
+        } else {
+            res.send(error);
         }
     }
     request(options, callback);
+    }
 });
 
 //nome
@@ -164,7 +173,7 @@ app.get('/v1/spotify/artist', function (req, res) {
                     request(opt2, callback3);
                 }
             }
-        }else{
+        } else {
             res.send(error);
         }
     }
@@ -192,38 +201,38 @@ app.get('/v1/spotify/album', function (req, res) {
                         "status": false
                     }
                     res.send(result);
-                }else{
-                var result = {
-                    "id": JSON.stringify(info['albums']['items']['0']['id']).replace(new RegExp('\\"', "g"), ""),
-                    "album": JSON.stringify(info['albums']['items']['0']['name']).replace(new RegExp('\\"', "g"), ""),
-                    "artista": JSON.stringify(info['albums']['items'][0]['artists'][0]['name']).replace(new RegExp('\\"', "g"), ""),
-                    "musicas": []
-                }
-                var opt = {
-                    url: "https://api.spotify.com/v1/albums/6hPkbAV3ZXpGZBGUvL6jVM/tracks",
-                    headers: {
-                        Accept: 'text/json'
+                } else {
+                    var result = {
+                        "id": JSON.stringify(info['albums']['items']['0']['id']).replace(new RegExp('\\"', "g"), ""),
+                        "album": JSON.stringify(info['albums']['items']['0']['name']).replace(new RegExp('\\"', "g"), ""),
+                        "artista": JSON.stringify(info['albums']['items'][0]['artists'][0]['name']).replace(new RegExp('\\"', "g"), ""),
+                        "musicas": []
                     }
-                };
-
-                function callback1(error, response, body) {
-                    if (!error && response.statusCode == 200) {
-                        var info1 = JSON.parse(body);
-                        if (info1 != ' ') {
-                            var tamanho = parseInt(JSON.stringify(info1['total']));
-                            for (var track in Object.keys(info1['items'])) {
-                                tracks.push(info1['items'][track]['name']);
-
-                            }
+                    var opt = {
+                        url: "https://api.spotify.com/v1/albums/6hPkbAV3ZXpGZBGUvL6jVM/tracks",
+                        headers: {
+                            Accept: 'text/json'
                         }
-                        result.musicas = tracks;
-                        res.send(result);
+                    };
+
+                    function callback1(error, response, body) {
+                        if (!error && response.statusCode == 200) {
+                            var info1 = JSON.parse(body);
+                            if (info1 != ' ') {
+                                var tamanho = parseInt(JSON.stringify(info1['total']));
+                                for (var track in Object.keys(info1['items'])) {
+                                    tracks.push(info1['items'][track]['name']);
+
+                                }
+                            }
+                            result.musicas = tracks;
+                            res.send(result);
+                        }
                     }
+                    request(opt, callback1);
                 }
-                request(opt, callback1);
             }
-            }
-        }else{
+        } else {
             res.send(error);
         }
     }
