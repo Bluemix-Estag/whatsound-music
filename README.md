@@ -12,7 +12,12 @@ REST API to GET tracks:
 
 Sending a String query with name of desired song and receive a uri as response
 
-# Response for query=Shape%20of%20you :
+# Response for 
+
+```
+?query=Shape%20of%20you
+```
+
 
 ```
  {
