@@ -101,8 +101,8 @@ Sending a String query with name of desired artist and receive a JSON as respons
   ],
   "status": false,
   "message": false
+  }
 }
- }
 
 ```
 
