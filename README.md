@@ -10,7 +10,7 @@ REST API to GET tracks:
     GET https://music-api.mybluemix.net/v1/spotify/track
 ```
 
-Sending a String query with name of desired song and receive a uri as response
+Sending a String #query with name of desired song and receive a #uri as response
 
 # Response for 
 
