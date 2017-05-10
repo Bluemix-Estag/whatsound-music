@@ -8,7 +8,7 @@ Endpoint to get a JSON object from Spotify as response
 REST API to GET tracks:
 
 ```
-    GET https://music-api.mybluemix.net/v1/spotify/track?query=NAME_OF_DESIRED_TRACK
+    GET https://music-api.mybluemix.net/whatsound/api/v1/spotify/track/values?query=NAME_OF_DESIRED_TRACK
 ```
 
 Sending a String query with name of desired song and receive a JSON as response
@@ -16,7 +16,7 @@ Sending a String query with name of desired song and receive a JSON as response
 # Response for 
 
 ```
-GET https://music-api.mybluemix.net/v1/spotify/track?query=Shape%20of%20You
+GET https://music-api.mybluemix.net/whatsound/api/v1/spotify/track/values?query=Shape%20of%20You
 ```
 
 
@@ -35,7 +35,7 @@ GET https://music-api.mybluemix.net/v1/spotify/track?query=Shape%20of%20You
 REST API to GET artists:
 
 ```
-    GET https://music-api.mybluemix.net/v1/spotify/artist?query=NAME_OF_DESIRED_ARTIST
+    GET https://music-api.mybluemix.net/whatsound/api/v1/spotify/artist/values?query=NAME_OF_DESIRED_ARTIST
 ```
 
 Sending a String query with name of desired artist and receive a JSON as response
@@ -43,7 +43,7 @@ Sending a String query with name of desired artist and receive a JSON as respons
 # Response for 
 
 ```
-GET https://music-api.mybluemix.net/v1/spotify/artist?query=Ed%20Sheeran
+GET https://music-api.mybluemix.net/whatsound/api/v1/spotify/artist/values?query=Ed%20Sheeran
 ```
 
 
@@ -110,7 +110,7 @@ GET https://music-api.mybluemix.net/v1/spotify/artist?query=Ed%20Sheeran
 REST API to GET artists:
 
 ```
-    GET https://music-api.mybluemix.net/v1/spotify/album?query=NAME_OF_DESIRED_ARTIST
+    GET https://music-api.mybluemix.net/whatsound/api/v1/spotify/album/values?query=NAME_OF_DESIRED_ARTIST
 ```
 
 Sending a String query with name of desired artist name and receive a JSON as response
@@ -118,7 +118,7 @@ Sending a String query with name of desired artist name and receive a JSON as re
 # Response for 
 
 ```
- GET https://music-api.mybluemix.net/v1/spotify/album?query=Ed%20Sheeran
+ GET https://music-api.mybluemix.net/whatsound/api/v1/spotify/album/values?query=Ed%20Sheeran
 ```
 
 
