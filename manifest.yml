@@ -1,0 +1,5 @@
+---
+applications:
+ - name: Music
+   host: music-api
+   memory: 128M
