@@ -22,8 +22,8 @@ Sending a String query with name of desired song and receive a JSON as response
 
 ```
  {
-    "nome": "Shape of You",
-    "artista": "Ed Sheeran",
+    "name": "Shape of You",
+    "artist": "Ed Sheeran",
     "album": "Shape of You",
     "uri": "spotify:track:0FE9t6xYkqWXU2ahLh6D8X",
     "url": "https://open.spotify.com/track/0FE9t6xYkqWXU2ahLh6D8X"
