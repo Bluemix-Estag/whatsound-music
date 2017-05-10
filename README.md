@@ -16,7 +16,7 @@ Sending a String query with name of desired song and receive a JSON as response
 # Response for 
 
 ```
-GET https://music-api.mybluemix.net/v1/spotify/track?query=NAME_OF_DESIRED_TRACK
+GET https://music-api.mybluemix.net/v1/spotify/track?query=Shape%20of%20You
 ```
 
 
