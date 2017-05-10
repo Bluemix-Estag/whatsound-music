@@ -106,3 +106,43 @@ Sending a String query with name of desired artist and receive a JSON as respons
 
 ```
 
+# Albums
+REST API to GET artists:
+
+```
+    GET https://music-api.mybluemix.net/v1/spotify/artist
+```
+
+Sending a String query with name of desired artist and receive a JSON as response
+
+# Response for 
+
+```
+?query=Ed%20Sheeran
+```
+
+
+```
+{
+  "id": "7oJa8bPFKVbq4c7NswXHw8",
+  "album": "Shape of You",
+  "artista": "Ed Sheeran",
+  "musicas": [
+    "Papercut",
+    "One Step Closer",
+    "With You",
+    "Points Of Authority",
+    "Crawling",
+    "Runaway",
+    "By Myself",
+    "In The End",
+    "A Place For My Head",
+    "Forgotten",
+    "Cure For The Itch",
+    "Pushing Me Away",
+    "My December",
+    "High Voltage",
+    "Papercut - Recorded Live At BBC1"
+  ]
+}
+```
