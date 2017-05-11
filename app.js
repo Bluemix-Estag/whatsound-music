@@ -236,7 +236,7 @@ app.get('/whatsound/api/v1/spotify/album/values', function (req, res) {
                                 if (info1 != ' ') {
                                     var tamanho = parseInt(JSON.stringify(info1['total']));
                                     for (var track in Object.keys(info1['items'])) {
-                                        tracks.push(info1['items'][track]['name']);
+                                        tracks.push({name:info1['items'][track]['name'],uri:info1['items'][track]['uri'],url:info1['items'][track]['external_urls']['spotify']});
 
                                     }
                                 }
