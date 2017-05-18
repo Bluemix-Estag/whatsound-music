@@ -43,6 +43,7 @@ app.get('/whatsound/api/v1/spotify/track/values', function (req, res) {
                         }
                         res.send(result);
                     } else {
+
                         var result = {
                             "name": JSON.stringify(info['tracks']['items'][0]['name']).replace(new RegExp('\\"', "g"), ""),
                             "artist": JSON.stringify(info['tracks']['items'][0]['artists'][0]['name']).replace(new RegExp('\\"', "g"), ""),
@@ -61,8 +62,12 @@ app.get('/whatsound/api/v1/spotify/track/values', function (req, res) {
                         function callbackArtist(error, response, body) {
                             if (!error && response.statusCode == 200) {
                                 var info1 = JSON.parse(body);
+                                var genres = info1['artists']['items'][0]['genres'];
+                                for (var i = 0; i < genres.length; i++) {
+                                    genres[i] = genres[i].replace(new RegExp('\\"', "g"), "")
+                                }
                                 if (info1 != ' ') {
-                                    result.genres = (JSON.stringify(info1.artists.items[0].genres).replace(new RegExp('\\"', "g"), ""));
+                                    result.genres = genres;
                                 }
                                 res.send(result);
                             }
@@ -112,12 +117,19 @@ app.get('/whatsound/api/v1/spotify/artist/values', function (req, res) {
                         }
                         res.send(result);
                     } else {
+
+                        var genres = info['artists']['items'][0]['genres'];
+                        for (var i = 0; i < genres.length; i++) {
+                            genres[i] = genres[i].replace(new RegExp('\\"', "g"), "")
+                        }
+
+
                         var result = {
                             "id": JSON.stringify(info['artists']['items']['0']['id']).replace(new RegExp('\\"', "g"), ""),
                             "artist": JSON.stringify(info['artists']['items']['0']['name']).replace(new RegExp('\\"', "g"), ""),
                             "url": JSON.stringify(info['artists']['items'][0]['external_urls']['spotify']).replace(new RegExp('\\"', "g"), ""),
                             "image": JSON.stringify(info['artists']['items'][0]['images'][0]['url']).replace(new RegExp('\\"', "g"), ""),
-                            "genres": JSON.stringify(info['artists']['items'][0]['genres']).replace(new RegExp('\\"', "g"), ""),
+                            "genres": genres,
                             "topTracks": [],
                             "related": [],
                             "albums": [],
@@ -274,13 +286,17 @@ app.get('/whatsound/api/v1/spotify/album/values', function (req, res) {
                                 Accept: 'text/json'
                             }
                         };
-                        
+
 
                         function callbackArtist1(error, response, body) {
                             if (!error && response.statusCode == 200) {
                                 var info1 = JSON.parse(body);
                                 if (info1 != ' ') {
-                                    result.genres = (JSON.stringify(info1.artists.items[0].genres).replace(new RegExp('\\"', "g"), ""));
+                                    var genres = info1['artists']['items'][0]['genres'];
+                                    for (var i = 0; i < genres.length; i++) {
+                                        genres[i] = genres[i].replace(new RegExp('\\"', "g"), "")
+                                    }
+                                    result.genres = genres;
                                 }
                             }
                         }
