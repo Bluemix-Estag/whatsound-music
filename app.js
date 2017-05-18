@@ -220,7 +220,7 @@ app.get('/whatsound/api/v1/spotify/album/values', function (req, res) {
                         var result = {
                             "id": JSON.stringify(info['albums']['items']['0']['id']).replace(new RegExp('\\"', "g"), ""),
                             "album": JSON.stringify(info['albums']['items']['0']['name']).replace(new RegExp('\\"', "g"), ""),
-                            "artista": JSON.stringify(info['albums']['items'][0]['artists'][0]['name']).replace(new RegExp('\\"', "g"), ""),
+                            "artist": JSON.stringify(info['albums']['items'][0]['artists'][0]['name']).replace(new RegExp('\\"', "g"), ""),
                             "musicas": []
                         }
                         var opt = {
