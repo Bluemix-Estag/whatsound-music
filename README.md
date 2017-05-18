@@ -22,12 +22,13 @@ GET https://music-api.mybluemix.net/whatsound/api/v1/spotify/track/values?query=
 
 ```
  {
-    "name": "Shape of You",
-    "artist": "Ed Sheeran",
-    "album": "Shape of You",
-    "uri": "spotify:track:0FE9t6xYkqWXU2ahLh6D8X",
-    "url": "https://open.spotify.com/track/0FE9t6xYkqWXU2ahLh6D8X"
- }
+  "name": "Shape of You",
+  "artist": "Ed Sheeran",
+  "album": "÷ (Deluxe)",
+  "uri": "spotify:track:7qiZfU4dY1lWllzX7mPBI3",
+  "url": "https://open.spotify.com/track/7qiZfU4dY1lWllzX7mPBI3",
+  "genres": "[pop]"
+}
 
 ```
 
@@ -54,6 +55,7 @@ GET https://music-api.mybluemix.net/whatsound/api/v1/spotify/artist/values?query
   "artist": "Ed Sheeran",
   "url": "https://open.spotify.com/artist/6eUKZXaKkcviH0Ku9w2n3V",
   "image": "https://i.scdn.co/image/f0370da3f52161b07a461b4be9a64d0adbfb498d",
+  "genres": "[pop]",
   "topTracks": [
     {
       "name": "Shape of You",
@@ -206,6 +208,7 @@ Sending a String query with name of desired artist name and receive a JSON as re
 		"name": "Save Myself",
 		"uri": "spotify:track:6TIU9Ehmi6dMzZK73Ym4yj",
 		"url": "https://open.spotify.com/track/6TIU9Ehmi6dMzZK73Ym4yj"
-	}]
+	}],
+  "genres": "[pop]"
 }
 ```
