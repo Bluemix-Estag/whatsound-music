@@ -50,7 +50,24 @@ app.get('/whatsound/api/v1/spotify/track/values', function (req, res) {
                             "uri": JSON.stringify(info['tracks']['items'][0]['uri']).replace(new RegExp('\\"', "g"), ""),
                             "url": JSON.stringify(info['tracks']['items'][0]['external_urls']['spotify']).replace(new RegExp('\\"', "g"), "")
                         }
-                        res.send(result);
+                        var optArtist = {
+                            url: "https://api.spotify.com/v1/search?q=" + result.artist + "&type=artist",
+                            headers: {
+                                Accept: 'text/json'
+                            }
+                        };
+                        console.log(optArtist.url);
+
+                        function callbackArtist(error, response, body) {
+                            if (!error && response.statusCode == 200) {
+                                var info1 = JSON.parse(body);
+                                if (info1 != ' ') {
+                                    result.genres = (JSON.stringify(info1.artists.items[0].genres).replace(new RegExp('\\"', "g"), ""));
+                                }
+                                res.send(result);
+                            }
+                        }
+                        request(optArtist, callbackArtist)
                     }
                 }
             } else {
@@ -100,6 +117,7 @@ app.get('/whatsound/api/v1/spotify/artist/values', function (req, res) {
                             "artist": JSON.stringify(info['artists']['items']['0']['name']).replace(new RegExp('\\"', "g"), ""),
                             "url": JSON.stringify(info['artists']['items'][0]['external_urls']['spotify']).replace(new RegExp('\\"', "g"), ""),
                             "image": JSON.stringify(info['artists']['items'][0]['images'][0]['url']).replace(new RegExp('\\"', "g"), ""),
+                            "genres": JSON.stringify(info['artists']['items'][0]['genres']).replace(new RegExp('\\"', "g"), ""),
                             "topTracks": [],
                             "related": [],
                             "albums": [],
@@ -224,7 +242,7 @@ app.get('/whatsound/api/v1/spotify/album/values', function (req, res) {
                             "musicas": []
                         }
                         var opt = {
-                            url: "https://api.spotify.com/v1/albums/"+result.id+"/tracks",
+                            url: "https://api.spotify.com/v1/albums/" + result.id + "/tracks",
                             headers: {
                                 Accept: 'text/json'
                             }
@@ -236,15 +254,39 @@ app.get('/whatsound/api/v1/spotify/album/values', function (req, res) {
                                 if (info1 != ' ') {
                                     var tamanho = parseInt(JSON.stringify(info1['total']));
                                     for (var track in Object.keys(info1['items'])) {
-                                        tracks.push({name:info1['items'][track]['name'],uri:info1['items'][track]['uri'],url:info1['items'][track]['external_urls']['spotify']});
+                                        tracks.push({
+                                            name: info1['items'][track]['name'],
+                                            uri: info1['items'][track]['uri'],
+                                            url: info1['items'][track]['external_urls']['spotify']
+                                        });
 
                                     }
+                                    result.musicas = tracks;
                                 }
-                                result.musicas = tracks;
-                                res.send(result);
+                                console.log(result.musicas);
+                                res.send(result)
+                            }
+                        }
+
+                        var optArtist1 = {
+                            url: "https://api.spotify.com/v1/search?q=" + result.artist + "&type=artist",
+                            headers: {
+                                Accept: 'text/json'
+                            }
+                        };
+                        
+
+                        function callbackArtist1(error, response, body) {
+                            if (!error && response.statusCode == 200) {
+                                var info1 = JSON.parse(body);
+                                if (info1 != ' ') {
+                                    result.genres = (JSON.stringify(info1.artists.items[0].genres).replace(new RegExp('\\"', "g"), ""));
+                                }
                             }
                         }
                         request(opt, callback1);
+                        request(optArtist1, callbackArtist1);
+
                     }
                 }
             } else {
