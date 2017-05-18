@@ -27,7 +27,7 @@ GET https://music-api.mybluemix.net/whatsound/api/v1/spotify/track/values?query=
   "album": "÷ (Deluxe)",
   "uri": "spotify:track:7qiZfU4dY1lWllzX7mPBI3",
   "url": "https://open.spotify.com/track/7qiZfU4dY1lWllzX7mPBI3",
-  "genres": "[pop]"
+  "genres": [pop]
 }
 
 ```
@@ -55,7 +55,7 @@ GET https://music-api.mybluemix.net/whatsound/api/v1/spotify/artist/values?query
   "artist": "Ed Sheeran",
   "url": "https://open.spotify.com/artist/6eUKZXaKkcviH0Ku9w2n3V",
   "image": "https://i.scdn.co/image/f0370da3f52161b07a461b4be9a64d0adbfb498d",
-  "genres": "[pop]",
+  "genres": [pop],
   "topTracks": [
     {
       "name": "Shape of You",
@@ -209,6 +209,6 @@ Sending a String query with name of desired artist name and receive a JSON as re
 		"uri": "spotify:track:6TIU9Ehmi6dMzZK73Ym4yj",
 		"url": "https://open.spotify.com/track/6TIU9Ehmi6dMzZK73Ym4yj"
 	}],
-  "genres": "[pop]"
+  "genres": [pop]
 }
 ```
