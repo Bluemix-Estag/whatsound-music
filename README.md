@@ -212,3 +212,29 @@ Sending a String query with name of desired artist name and receive a JSON as re
   "genres": [pop]
 }
 ```
+
+# Genres
+REST API to GET tracks:
+
+```
+    GET https://music-api.mybluemix.net/whatsound/api/v1/spotify/genre/values?query=NAME_OF_DESIRED_GENRE
+```
+
+Sending a String query with name of desired genre and receive a JSON as response
+
+# Response for 
+
+```
+GET https://music-api.mybluemix.net/whatsound/api/v1/spotify/genre/values?query=pop
+```
+
+
+```
+{
+  "name": "Friends, Lovers or Nothing",
+  "artist": "John Mayer",
+  "album": "Battle Studies",
+  "uri": "spotify:track:1wkaoS4jTVXYMUWHKVFZTk",
+  "url": "https://open.spotify.com/track/1wkaoS4jTVXYMUWHKVFZTk"
+}
+```

@@ -257,7 +257,7 @@ app.get('/whatsound/api/v1/spotify/album/values', function (req, res) {
 });
 
 
-app.get('/whatsound/api/v1/spotify/genres/values', function (req, res) {
+app.get('/whatsound/api/v1/spotify/genre/values', function (req, res) {
     var query = (req.query.query != null && req.query.query != '' && req.query.query != "undefined") ? req.query.query : null;
     
     var offset = Math.floor(Math.random() * 8000 + 1);
