@@ -38,18 +38,18 @@ app.get('/whatsound/api/v1/spotify/track/values', function (req, res) {
                     if (info['tracks']['items'].length == 0) {
                         var result = {
                             "code": 20,
-                            "message": "Músic not found",
+                            "message": "Music not found",
                             "status": false
                         }
                         res.send(result);
                     } else {
-
                         var result = {
-                            "name": JSON.stringify(info['tracks']['items'][0]['name']).replace(new RegExp('\\"', "g"), ""),
-                            "artist": JSON.stringify(info['tracks']['items'][0]['artists'][0]['name']).replace(new RegExp('\\"', "g"), ""),
-                            "album": JSON.stringify(info['tracks']['items'][0]['album']['name']).replace(new RegExp('\\"', "g"), ""),
-                            "uri": JSON.stringify(info['tracks']['items'][0]['uri']).replace(new RegExp('\\"', "g"), ""),
-                            "url": JSON.stringify(info['tracks']['items'][0]['external_urls']['spotify']).replace(new RegExp('\\"', "g"), "")
+                            "name": (info['tracks']['items'][0]['name'] != null)?JSON.stringify(info['tracks']['items'][0]['name']).replace(new RegExp('\\"', "g"), ""):null,
+                            "artist": (info['tracks']['items'][0]['artists'][0]['name'] != null)?JSON.stringify(info['tracks']['items'][0]['artists'][0]['name']).replace(new RegExp('\\"', "g"), ""):null,
+                            "album": (info['tracks']['items'][0]['album']['name']!=null)?JSON.stringify(info['tracks']['items'][0]['album']['name']).replace(new RegExp('\\"', "g"), ""):null,
+                            "uri": (info['tracks']['items'][0]['uri'] !=null)?JSON.stringify(info['tracks']['items'][0]['uri']).replace(new RegExp('\\"', "g"), ""):null,
+                            "url": (info['tracks']['items'][0]['external_urls']['spotify']!=null)?JSON.stringify(info['tracks']['items'][0]['external_urls']['spotify']).replace(new RegExp('\\"', "g"), ""):null
+                        
                         }
                         var optArtist = {
                             url: "https://api.spotify.com/v1/search?q=" + result.artist + "&type=artist",
@@ -117,18 +117,17 @@ app.get('/whatsound/api/v1/spotify/artist/values', function (req, res) {
                         }
                         res.send(result);
                     } else {
-
+                        
                         var genres = info['artists']['items'][0]['genres'];
                         for (var i = 0; i < genres.length; i++) {
                             genres[i] = genres[i].replace(new RegExp('\\"', "g"), "")
                         }
-
-
+                        
                         var result = {
-                            "id": JSON.stringify(info['artists']['items']['0']['id']).replace(new RegExp('\\"', "g"), ""),
-                            "artist": JSON.stringify(info['artists']['items']['0']['name']).replace(new RegExp('\\"', "g"), ""),
-                            "url": JSON.stringify(info['artists']['items'][0]['external_urls']['spotify']).replace(new RegExp('\\"', "g"), ""),
-                            "image": JSON.stringify(info['artists']['items'][0]['images'][0]['url']).replace(new RegExp('\\"', "g"), ""),
+                            "id": (info['artists']['items']['0']['id']!==null)?JSON.stringify(info['artists']['items']['0']['id']).replace(new RegExp('\\"', "g"), ""):null,
+                            "artist": (info['artists']['items']['0']['name']!== null)?JSON.stringify(info['artists']['items']['0']['name']).replace(new RegExp('\\"', "g"), ""):null,
+                            "url": (info['artists']['items'][0]['external_urls']['spotify']!==null)?JSON.stringify(info['artists']['items'][0]['external_urls']['spotify']).replace(new RegExp('\\"', "g"), ""):null,
+                            "image": (info['artists']['items'][0]['images'][0] !== undefined)?JSON.stringify(info['artists']['items'][0]['images'][0]['url']).replace(new RegExp('\\"', "g"), ""):null,
                             "genres": genres,
                             "topTracks": [],
                             "related": [],
@@ -142,6 +141,7 @@ app.get('/whatsound/api/v1/spotify/artist/values', function (req, res) {
                                 Accept: 'text/json'
                             }
                         };
+                        //te
 
                         function callback1(error, response, body) {
                             if (!error && response.statusCode == 200) {
@@ -150,12 +150,12 @@ app.get('/whatsound/api/v1/spotify/artist/values', function (req, res) {
                                     var tamanho = parseInt(JSON.stringify(info1['total']));
                                     for (var artist in Object.keys(info1['artists'])) {
                                         related.push({
-                                            "artist": JSON.stringify(info1['artists'][artist]['name']).replace(new RegExp('\\"', "g"), ""),
-                                            "image": JSON.stringify(info1['artists'][artist]['images'][0]['url']).replace(new RegExp('\\"', "g"), ""),
-                                            "url": JSON.stringify(info1['artists'][artist]['external_urls']['spotify']).replace(new RegExp('\\"', "g"), "")
+                                            "artist": (info1['artists'][artist]['name'] !== undefined)?JSON.stringify(info1['artists'][artist]['name']).replace(new RegExp('\\"', "g"), ""):null,
+                                            "image": (info1['artists'][artist]['images'][0] !== undefined)?JSON.stringify(info1['artists'][artist]['images'][0]['url']).replace(new RegExp('\\"', "g"), ""):null,
+                                            "url": (info1['artists'][artist]['external_urls']['spotify'] !== undefined)?JSON.stringify(info1['artists'][artist]['external_urls']['spotify']).replace(new RegExp('\\"', "g"), ""):null
                                         });
                                     }
-                                }
+                                }//
                                 result.related = related;
                             }
                         }
@@ -173,9 +173,9 @@ app.get('/whatsound/api/v1/spotify/artist/values', function (req, res) {
                                 if (info2 != ' ') {
                                     for (var track in Object.keys(info2['tracks'])) {
                                         topTracks.push({
-                                            "name": JSON.stringify(info2['tracks'][track]['name']).replace(new RegExp('\\"', "g"), ""),
-                                            "uri": JSON.stringify(info2['tracks'][track]['uri']).replace(new RegExp('\\"', "g"), ""),
-                                            "url": JSON.stringify(info2['tracks'][track]['external_urls']['spotify']).replace(new RegExp('\\"', "g"), "")
+                                            "name": (info2['tracks'][track]['name']!==null)?JSON.stringify(info2['tracks'][track]['name']).replace(new RegExp('\\"', "g"), ""):null,
+                                            "uri": (info2['tracks'][track]['uri']!==null)?JSON.stringify(info2['tracks'][track]['uri']).replace(new RegExp('\\"', "g"), ""):null,
+                                            "url": (info2['tracks'][track]['external_urls']['spotify']!== null)?JSON.stringify(info2['tracks'][track]['external_urls']['spotify']).replace(new RegExp('\\"', "g"), ""):null
                                         });
                                     }
                                 }
@@ -195,9 +195,9 @@ app.get('/whatsound/api/v1/spotify/artist/values', function (req, res) {
                                 if (info3 != ' ') {
                                     for (var item in Object.keys(info3['items'])) {
                                         albums.push({
-                                            "name": JSON.stringify(info3['items'][item]['name']).replace(new RegExp('\\"', "g"), ""),
-                                            "image": JSON.stringify(info3['items'][item]['images'][0]['url']).replace(new RegExp('\\"', "g"), ""),
-                                            "url": JSON.stringify(info3['items'][item]['external_urls']['spotify']).replace(new RegExp('\\"', "g"), "")
+                                            "name": (info3['items'][item]['name']!== null)?JSON.stringify(info3['items'][item]['name']).replace(new RegExp('\\"', "g"), ""):null,
+                                            "image": (info3['items'][item]['images'][0]['url']!==null)?JSON.stringify(info3['items'][item]['images'][0]['url']).replace(new RegExp('\\"', "g"), ""):null,
+                                            "url": (info3['items'][item]['external_urls']['spotify']!==null)?JSON.stringify(info3['items'][item]['external_urls']['spotify']).replace(new RegExp('\\"', "g"), ""):null
                                         });
                                     }
                                 }
@@ -248,13 +248,13 @@ app.get('/whatsound/api/v1/spotify/album/values', function (req, res) {
                         res.send(result);
                     } else {
                         var result = {
-                            "id": JSON.stringify(info['albums']['items']['0']['id']).replace(new RegExp('\\"', "g"), ""),
-                            "album": JSON.stringify(info['albums']['items']['0']['name']).replace(new RegExp('\\"', "g"), ""),
-                            "artist": JSON.stringify(info['albums']['items'][0]['artists'][0]['name']).replace(new RegExp('\\"', "g"), ""),
+                            "id": (info['albums']['items']['0']['id']!==null)?JSON.stringify(info['albums']['items']['0']['id']).replace(new RegExp('\\"', "g"), ""):null,
+                            "album": (info['albums']['items']['0']['name']!==null)?JSON.stringify(info['albums']['items']['0']['name']).replace(new RegExp('\\"', "g"), ""):null,
+                            "artist": (info['albums']['items'][0]['artists'][0]['name']!==null)?JSON.stringify(info['albums']['items'][0]['artists'][0]['name']).replace(new RegExp('\\"', "g"), ""):null,
                             "musicas": []
                         }
                         var opt = {
-                            url: "https://api.spotify.com/v1/albums/" + result.id + "/tracks",
+                            url: "https://api.spotify.com/v1/albums/"+result.id+"/tracks",
                             headers: {
                                 Accept: 'text/json'
                             }
@@ -266,20 +266,16 @@ app.get('/whatsound/api/v1/spotify/album/values', function (req, res) {
                                 if (info1 != ' ') {
                                     var tamanho = parseInt(JSON.stringify(info1['total']));
                                     for (var track in Object.keys(info1['items'])) {
-                                        tracks.push({
-                                            name: info1['items'][track]['name'],
-                                            uri: info1['items'][track]['uri'],
-                                            url: info1['items'][track]['external_urls']['spotify']
-                                        });
+                                        tracks.push({name:info1['items'][track]['name'],uri:info1['items'][track]['uri'],url:info1['items'][track]['external_urls']['spotify']});
 
                                     }
-                                    result.musicas = tracks;
                                 }
-                                console.log(result.musicas);
-                                res.send(result)
+                                result.musicas = tracks;
+                                res.send(result);
                             }
                         }
-
+                        
+                        
                         var optArtist1 = {
                             url: "https://api.spotify.com/v1/search?q=" + result.artist + "&type=artist",
                             headers: {
