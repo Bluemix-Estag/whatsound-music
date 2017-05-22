@@ -38,7 +38,7 @@ app.get('/whatsound/api/v1/spotify/track/values', function (req, res) {
                     if (info['tracks']['items'].length == 0) {
                         var result = {
                             "code": 20,
-                            "message": "Music not found",
+                            "message": "Músic not found",
                             "status": false
                         }
                         res.send(result);
@@ -49,30 +49,9 @@ app.get('/whatsound/api/v1/spotify/track/values', function (req, res) {
                             "album": (info['tracks']['items'][0]['album']['name']!=null)?JSON.stringify(info['tracks']['items'][0]['album']['name']).replace(new RegExp('\\"', "g"), ""):null,
                             "uri": (info['tracks']['items'][0]['uri'] !=null)?JSON.stringify(info['tracks']['items'][0]['uri']).replace(new RegExp('\\"', "g"), ""):null,
                             "url": (info['tracks']['items'][0]['external_urls']['spotify']!=null)?JSON.stringify(info['tracks']['items'][0]['external_urls']['spotify']).replace(new RegExp('\\"', "g"), ""):null
+                        }
+                        res.send(result);
                         
-                        }
-                        var optArtist = {
-                            url: "https://api.spotify.com/v1/search?q=" + result.artist + "&type=artist",
-                            headers: {
-                                Accept: 'text/json'
-                            }
-                        };
-                        console.log(optArtist.url);
-
-                        function callbackArtist(error, response, body) {
-                            if (!error && response.statusCode == 200) {
-                                var info1 = JSON.parse(body);
-                                var genres = info1['artists']['items'][0]['genres'];
-                                for (var i = 0; i < genres.length; i++) {
-                                    genres[i] = genres[i].replace(new RegExp('\\"', "g"), "")
-                                }
-                                if (info1 != ' ') {
-                                    result.genres = genres;
-                                }
-                                res.send(result);
-                            }
-                        }
-                        request(optArtist, callbackArtist)
                     }
                 }
             } else {
@@ -117,18 +96,11 @@ app.get('/whatsound/api/v1/spotify/artist/values', function (req, res) {
                         }
                         res.send(result);
                     } else {
-                        
-                        var genres = info['artists']['items'][0]['genres'];
-                        for (var i = 0; i < genres.length; i++) {
-                            genres[i] = genres[i].replace(new RegExp('\\"', "g"), "")
-                        }
-                        
                         var result = {
                             "id": (info['artists']['items']['0']['id']!==null)?JSON.stringify(info['artists']['items']['0']['id']).replace(new RegExp('\\"', "g"), ""):null,
                             "artist": (info['artists']['items']['0']['name']!== null)?JSON.stringify(info['artists']['items']['0']['name']).replace(new RegExp('\\"', "g"), ""):null,
                             "url": (info['artists']['items'][0]['external_urls']['spotify']!==null)?JSON.stringify(info['artists']['items'][0]['external_urls']['spotify']).replace(new RegExp('\\"', "g"), ""):null,
                             "image": (info['artists']['items'][0]['images'][0] !== undefined)?JSON.stringify(info['artists']['items'][0]['images'][0]['url']).replace(new RegExp('\\"', "g"), ""):null,
-                            "genres": genres,
                             "topTracks": [],
                             "related": [],
                             "albums": [],
@@ -141,7 +113,6 @@ app.get('/whatsound/api/v1/spotify/artist/values', function (req, res) {
                                 Accept: 'text/json'
                             }
                         };
-                        //te
 
                         function callback1(error, response, body) {
                             if (!error && response.statusCode == 200) {
@@ -274,31 +245,7 @@ app.get('/whatsound/api/v1/spotify/album/values', function (req, res) {
                                 res.send(result);
                             }
                         }
-                        
-                        
-                        var optArtist1 = {
-                            url: "https://api.spotify.com/v1/search?q=" + result.artist + "&type=artist",
-                            headers: {
-                                Accept: 'text/json'
-                            }
-                        };
-
-
-                        function callbackArtist1(error, response, body) {
-                            if (!error && response.statusCode == 200) {
-                                var info1 = JSON.parse(body);
-                                if (info1 != ' ') {
-                                    var genres = info1['artists']['items'][0]['genres'];
-                                    for (var i = 0; i < genres.length; i++) {
-                                        genres[i] = genres[i].replace(new RegExp('\\"', "g"), "")
-                                    }
-                                    result.genres = genres;
-                                }
-                            }
-                        }
                         request(opt, callback1);
-                        request(optArtist1, callbackArtist1);
-
                     }
                 }
             } else {
@@ -308,6 +255,58 @@ app.get('/whatsound/api/v1/spotify/album/values', function (req, res) {
     }
     request(options, callback);
 });
+
+
+app.get('/whatsound/api/v1/spotify/genres/values', function (req, res) {
+    var query = (req.query.query != null && req.query.query != '' && req.query.query != "undefined") ? req.query.query : null;
+    
+    var offset = Math.floor(Math.random() * 8000 + 1);
+    // tipo = tracks, artists, albums
+    if (query == null) {
+        var result = {
+            status: false,
+            message: "Bad request, {Empty query}"
+        }
+        res.status(400).json(result);
+    } else {
+        var options = {
+            url: "https://api.spotify.com/v1/search?type=track&market=BR&offset="+offset+"&limit=1&q=genre:"+query,
+            headers: {
+                Accept: 'text/json'
+            }
+        };
+
+        function callback(error, response, body) {
+            if (!error && response.statusCode == 200) {
+                var info = JSON.parse(body);
+                if (info != ' ') {
+                    if (info['tracks']['items'].length == 0) {
+                        var result = {
+                            "code": 20,
+                            "message": "Músic not found",
+                            "status": false
+                        }
+                        res.send(result);
+                    } else {
+                        var result = {
+                            "name": (info['tracks']['items'][0]['name'] != null)?JSON.stringify(info['tracks']['items'][0]['name']).replace(new RegExp('\\"', "g"), ""):null,
+                            "artist": (info['tracks']['items'][0]['artists'][0]['name'] != null)?JSON.stringify(info['tracks']['items'][0]['artists'][0]['name']).replace(new RegExp('\\"', "g"), ""):null,
+                            "album": (info['tracks']['items'][0]['album']['name']!=null)?JSON.stringify(info['tracks']['items'][0]['album']['name']).replace(new RegExp('\\"', "g"), ""):null,
+                            "uri": (info['tracks']['items'][0]['uri'] !=null)?JSON.stringify(info['tracks']['items'][0]['uri']).replace(new RegExp('\\"', "g"), ""):null,
+                            "url": (info['tracks']['items'][0]['external_urls']['spotify']!=null)?JSON.stringify(info['tracks']['items'][0]['external_urls']['spotify']).replace(new RegExp('\\"', "g"), ""):null
+                        }
+                        res.send(result);
+                        
+                    }
+                }
+            } else {
+                res.send(error);
+            }
+        }
+        request(options, callback);
+    }
+});
+
 
 
 //serve static file (index.html, images, css)
